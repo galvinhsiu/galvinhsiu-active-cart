@@ -1,5 +1,4 @@
-*.gemspec
-pkg
+pkg/*
 rdoc
 test/log/*.log
 coverage
