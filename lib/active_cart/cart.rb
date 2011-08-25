@@ -168,7 +168,7 @@ module ActiveCart
     # :nodoc
     def method_missing(symbol, *args)
       # This allows developers to add extra aasm event transaction, and still allow them to called from the cart
-      if @storage_engine.class.aasm_events.keys.include?(symbol.to_s[0..-2].to_sym)
+      if @storage_engine.state_paths.events.include?(symbol.to_s[0..-2].to_sym)
         @storage_engine.send(symbol)
       else
         super

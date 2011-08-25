@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class TestOrderTotal
   attr_accessor :price, :active, :name
   def initialize(name, price, active = true)

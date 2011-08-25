@@ -1,63 +1,35 @@
-require 'rubygems'
-require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
 
-begin
-  require 'jeweler'
-  
-  Jeweler::Tasks.new do |gem|
-    gem.name = "active_cart"
-    gem.summary = "Shopping Cart framework gem. Supports 'storage engines' and order total plugins"
-    gem.description = "You can use active_cart as the basis of a shopping cart system. It's not a shopping cart application - it's a shopping cart framework."
-    gem.email = "myles@madpilot.com.au"
-    gem.homepage = "http://gemcutter.org/gems/active_cart"
-    gem.authors = ["Myles Eftos"]
-    gem.version = File.exist?('VERSION') ? File.read('VERSION') : ""
-    
-    gem.add_dependency 'aasm'
-
-    gem.add_development_dependency 'redgreen'
-    gem.add_development_dependency 'shoulda'
-    gem.add_development_dependency 'mocha'
-    gem.add_development_dependency 'machinist'
-    gem.add_development_dependency 'faker'
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+desc 'Run all tests'
+task :test do
+  ENV['RAILS_ENV'] = 'test'
+  $LOAD_PATH.unshift(File.expand_path('test'))
+  require 'redgreen' if Gem.available?('redgreen')
+  require 'test/unit'
+  Dir['test/**/test_*.rb'].each {|test| require "./#{test}" }
 end
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/unit/*_test.rb'
-  test.verbose = true
+desc 'Generate YARD Documentation'
+task :doc do
+  sh "mv README TEMPME"
+  sh "rm -rf doc"
+  sh "yardoc"
+  sh "mv TEMPME README"
 end
 
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/unit/*_test.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
-end
+namespace :gem do
 
-task :test => :check_dependencies
+  desc 'Build and install the active_cart gem'
+  task :install do
+    sh "gem build active_cart.gemspec"
+    sh "sudo gem install #{Dir['*.gem'].join(' ')} --local --no-ri --no-rdoc"
+  end
+
+  desc 'Uninstall the active_cart gem'
+  task :uninstall do
+    sh "sudo gem uninstall -x active_cart"
+  end
+
+end
 
 task :default => :test
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "active_cart #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end

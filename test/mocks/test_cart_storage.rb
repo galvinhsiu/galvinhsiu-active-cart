@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class TestCartStorage < Array
   include ActiveCart::CartStorage
 

@@ -14,33 +14,34 @@ module ActiveCart
   #
   module CartStorage
     def self.included(base) #:nodoc:
-      base.send :include, AASM
 
-      base.aasm_initial_state :shopping
-      base.aasm_state :shopping, :enter => :enter_shopping, :exit => :exit_shopping
-      base.aasm_state :checkout, :enter => :enter_checkout, :exit => :exit_checkout
-      base.aasm_state :verifying_payment, :enter => :enter_verifying_payment, :exit => :exit_verifying_payment
-      base.aasm_state :completed, :enter => :enter_completed, :exit => :exit_completed
-      base.aasm_state :failed, :enter => :enter_failed, :exit => :exit_failed
+      base.state_machine :state, :initial => :shopping do
 
-      base.aasm_event :continue_shopping do
-        transitions :from => [ :checkout, :verifying_payment, :failed ], :to => :shopping, :guard => :guard_continue_shopping
-      end
+        event :continue_shopping do
+          transition [ :checkout, :verifying_payment, :failed ] => :shopping
+        end
 
-      base.aasm_event :checkout do
-        transitions :from => [ :shopping, :verifying_payment, :failed ], :to => :checkout, :guard => :guard_checkout
-      end
+        event :checkout do
+          transition [ :shopping, :verifying_payment, :failed ] => :checkout
+        end
 
-      base.aasm_event :check_payment do
-        transitions :from => :checkout, :to => :verifying_payment, :guard => :guard_check_payment
-      end
+        event :check_payment do
+          transition :checkout => :verifying_payment
+        end
 
-      base.aasm_event :payment_successful do
-        transitions :from => :verifying_payment, :to => :completed, :guard => :guard_payment_successful
-      end
+        event :payment_successful do
+          transition :verifying_payment => :completed
+        end
 
-      base.aasm_event :payment_failed do
-        transitions :from => :verifying_payment, :to => :failed, :guard => :guard_payment_failed
+        event :payment_failed do
+          transition :verifying_payment => :failed
+        end
+
+        state :shopping
+        state :checkout
+        state :verifying_payment
+        state :completed
+        state :failed
       end
     end
 
@@ -185,10 +186,6 @@ module ActiveCart
           self.delete_at(index)
         end
       end
-    end
-
-    def state
-      return aasm_current_state
     end
   end
 end

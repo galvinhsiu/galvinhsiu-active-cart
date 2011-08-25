@@ -1,4 +1,5 @@
-require 'test_helper'
+dir = File.dirname(__FILE__)
+require "#{dir}/../test_helper"
 
 class CartTest < ActiveSupport::TestCase
   context '' do
@@ -90,7 +91,7 @@ class CartTest < ActiveSupport::TestCase
             @cart.add_to_cart(item, 10)
             item.expects(:before_add_to_cart).with(10, {}).returns(true)
             @cart.update_cart(item, 20)
-            assert 20, @cart.quantity
+            assert_equal 20, @cart.quantity
           end
 
           should 'halt and return false if before_add_to_cart callback returns fale when update_cart adds items to the cart' do
@@ -98,7 +99,7 @@ class CartTest < ActiveSupport::TestCase
             @cart.add_to_cart(item, 10)
             item.expects(:before_add_to_cart).with(10, { :option => 'value' }).returns(false)
             assert !@cart.update_cart(item, 20, { :option => 'value' })
-            assert 10, @cart.quantity
+            assert_equal 10, @cart.quantity
           end
 
           should 'fire the item after_add_to_cart callback if update_cart adds items to the cart' do
@@ -106,7 +107,7 @@ class CartTest < ActiveSupport::TestCase
             @cart.add_to_cart(item, 10)
             item.expects(:after_add_to_cart).with(10, {}).returns(true)
             @cart.update_cart(item, 20)
-            assert 20, @cart.quantity
+            assert_equal 20, @cart.quantity
           end
 
            should 'fire the item after_remove_from_cart callback if update_cart removes items from the cart' do
@@ -114,7 +115,7 @@ class CartTest < ActiveSupport::TestCase
             @cart.add_to_cart(item, 10)
             item.expects(:before_remove_from_cart).with(5, {}).returns(true)
             @cart.update_cart(item, 5)
-            assert 5, @cart.quantity
+            assert_equal 5, @cart.quantity
           end
 
           should 'halt and return false if after_remove_from_cart callback returns false when update_cart removes items from the cart' do
@@ -122,7 +123,7 @@ class CartTest < ActiveSupport::TestCase
             @cart.add_to_cart(item, 10)
             item.expects(:before_remove_from_cart).with(5, { :option => 'value' }).returns(false)
             assert !@cart.update_cart(item, 5, { :option => 'value' })
-            assert 10, @cart.quantity
+            assert_equal 10, @cart.quantity
           end
 
 
@@ -131,7 +132,7 @@ class CartTest < ActiveSupport::TestCase
             @cart.add_to_cart(item, 10)
             item.expects(:after_remove_from_cart).with(5, {}).returns(true)
             @cart.update_cart(item, 5)
-            assert 10, @cart.quantity
+            assert_equal 5, @cart.quantity
           end
         end
 

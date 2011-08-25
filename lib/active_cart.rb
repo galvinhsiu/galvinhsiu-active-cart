@@ -3,13 +3,12 @@ $:.unshift(File.join(File.dirname(__FILE__), 'active_cart'))
 require 'rubygems'
 require 'singleton'
 require 'forwardable'
-require 'aasm'
+require 'state_machine'
 require 'item'
 require 'cart_storage'
 require 'order_total'
 require 'order_total_collection'
 require 'cart'
-require 'acts_as_cart' if defined?(ActiveRecord)
 
 require 'exceptions/out_of_stock'
 

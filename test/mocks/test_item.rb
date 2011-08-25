@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class TestItem
   include ActiveCart::Item
 

@@ -3,7 +3,6 @@ $:.unshift(File.join(File.dirname(__FILE__), 'fixtures'))
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'rubygems'
-require 'redgreen'
 require 'test/unit'
 require 'shoulda'
 require 'mocha'
@@ -27,8 +26,6 @@ ActiveRecord::Base.configurations = YAML::load <<-YAML
     :database: ':memory:'
 YAML
 ActiveRecord::Base.establish_connection('sqlite3')
-
-require 'active_cart/acts_as_cart'
 
 # Load Schema
 load(File.dirname(__FILE__) + '/schema.rb')
