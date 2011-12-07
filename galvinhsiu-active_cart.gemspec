@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'machinist'
   s.add_development_dependency 'faker'
 
-  s.files = Dir['lib/**/*', 'active_cart.gemspec']
+  s.files = Dir['lib/**/*', 'galvinhsiu-active_cart.gemspec']
 end
