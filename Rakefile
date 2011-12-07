@@ -20,13 +20,13 @@ namespace :gem do
 
   desc 'Build and install the active_cart gem'
   task :install do
-    sh "gem build active_cart.gemspec"
+    sh "gem build galvinhsiu-active_cart.gemspec"
     sh "sudo gem install #{Dir['*.gem'].join(' ')} --local --no-ri --no-rdoc"
   end
 
   desc 'Uninstall the active_cart gem'
   task :uninstall do
-    sh "sudo gem uninstall -x active_cart"
+    sh "sudo gem uninstall -x galvinhsiu-active_cart"
   end
 
 end
