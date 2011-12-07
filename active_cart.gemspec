@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.require_paths     = ['lib']
 
   s.add_dependency 'state_machine'
-  s.add_development_dependency 'redgreen'
   s.add_development_dependency 'shoulda'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'machinist'
