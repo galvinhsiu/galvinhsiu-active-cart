@@ -1,15 +1,15 @@
 Gem::Specification.new do |s|
-  s.name      = 'active_cart'
-  s.summary     = "Shopping Cart framework gem. Supports 'storage engines' and order total plugins"
+  s.name = 'galvinhsiu-active_cart'
+  s.summary = "Shopping Cart framework gem. Supports 'storage engines' and order total plugins, forked to use state_machine from active_cart."
   s.description = <<-EOS
     You can use active_cart as the basis of a shopping cart system. It's not a shopping cart application - it's a shopping cart framework.
   EOS
-  s.email             = 'myles@madpilot.com.au'
-  s.homepage    = "http://gemcutter.org/gems/active_cart"
-  s.authors           = ["Myles Eftos"]
-  s.version   = '0.0.19'
+  s.email = 'myles@madpilot.com.au, galvinhsiu@gmail.com'
+  s.homepage = "http://gemcutter.org/gems/galvinhsiu-active_cart"
+  s.authors = ["Myles Eftos", "Galvin Hsiu"]
+  s.version = '0.0.19'
 
-  s.require_paths     = ['lib']
+  s.require_paths = ['lib']
 
   s.add_dependency 'state_machine'
   s.add_development_dependency 'shoulda'

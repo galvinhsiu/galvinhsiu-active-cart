@@ -6,7 +6,7 @@ The cart system has a storage engine, which means you aren't bound to a particul
 gem isn't just for Rails, by writing other engines, you could target any datastore.
 
 == Installation
-  gem install active_cart
+  gem install galvinhsiu-active_cart
 
 == Usage
 
